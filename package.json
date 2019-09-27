@@ -1,0 +1,41 @@
+{
+  "name": "meetappserver",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon ./src/server.js",
+    "queue": "nodemon ./src/queue.js"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-airbnb-base": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-prettier": "latest",
+    "nodemon": "latest",
+    "prettier": "latest",
+    "sequelize-cli": "latest",
+    "sucrase": "latest"
+  },
+  "dependencies": {
+    "@sentry/node": "^5.6.2",
+    "app-module-path": "^2.2.0",
+    "axios": "latest",
+    "bcryptjs": "latest",
+    "bee-queue": "^1.2.2",
+    "cors": "latest",
+    "date-fns": "^2.0.0-beta.5",
+    "dotenv": "^8.1.0",
+    "express": "latest",
+    "express-async-errors": "^3.1.1",
+    "express-handlebars": "^3.1.0",
+    "jsonwebtoken": "latest",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.3.0",
+    "nodemailer-express-handlebars": "^3.1.0",
+    "pg": "latest",
+    "pg-hstore": "latest",
+    "sequelize": "latest",
+    "youch": "^2.0.10",
+    "yup": "latest"
+  }
+}
