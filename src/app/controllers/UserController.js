@@ -46,11 +46,11 @@ class UserController {
       return res.status(400).json({ error: 'Invalid/Missing data in form' });
     }
 
-    const { newEmail, currentPassword } = req.body;
+    const { email, currentPassword } = req.body;
     const user = await User.findByPk(req.userId);
 
-    if (newEmail && newEmail !== user.email) {
-      const userExists = await User.findOne({ where: { newEmail } });
+    if (email && email !== user.email) {
+      const userExists = await User.findOne({ where: { email } });
       if (userExists) {
         return res.status(400).json({ error: 'User already exists' });
       }
@@ -60,7 +60,7 @@ class UserController {
       return res.status(401).json({ error: 'Current password is invalid' });
     }
 
-    const { id, name, email } = await user.update(req.body);
+    const { id, name } = await user.update(req.body);
     return res.json({ id, name, email });
   }
 }
