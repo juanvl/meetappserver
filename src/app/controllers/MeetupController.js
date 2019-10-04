@@ -3,6 +3,7 @@ import { Op } from 'sequelize';
 import { isBefore, startOfDay, endOfDay, parseISO } from 'date-fns';
 import Meetup from 'app/models/Meetup';
 import User from 'app/models/User';
+import File from 'app/models/File';
 
 class MeetupController {
   async index(req, res) {
@@ -25,6 +26,24 @@ class MeetupController {
     });
 
     return res.json(meetups);
+  }
+
+  async detail(req, res) {
+    const meetup = await Meetup.findByPk(req.params.id, {
+      include: [
+        {
+          model: File,
+          as: 'file',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
+
+    if (!meetup) {
+      return res.status(400).json({ error: 'Meetup does not exist' });
+    }
+
+    return res.json(meetup);
   }
 
   async store(req, res) {

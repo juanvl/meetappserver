@@ -1,10 +1,38 @@
+import * as Yup from 'yup';
+
 import Meetup from 'app/models/Meetup';
+import File from 'app/models/File';
 
 class UserOwnedMeetupsController {
   async index(req, res) {
-    const meetups = await Meetup.findAll({ where: { user_id: req.userId } });
+    const meetups = await Meetup.findAll({
+      where: { user_id: req.userId },
+      order: ['date'],
+    });
 
     return res.json(meetups);
+  }
+
+  async detail(req, res) {
+    const meetup = await Meetup.findByPk(req.params.id, {
+      include: [
+        {
+          model: File,
+          as: 'file',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
+
+    if (!meetup) {
+      return res.status(400).json({ error: 'Meetup does not exist' });
+    }
+
+    if (meetup.user_id !== req.userId) {
+      return res.status(401).json({ error: 'You do not own this meetup' });
+    }
+
+    return res.json(meetup);
   }
 
   async update(req, res) {

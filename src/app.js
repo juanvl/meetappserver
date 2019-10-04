@@ -17,15 +17,15 @@ class App {
 
     Sentry.init(sentryConfig);
 
-    this.server.use(Sentry.Handlers.requestHandler());
     this.middlewares();
     this.routes();
     this.exceptionHandler();
   }
 
   middlewares() {
-    this.server.use(express.json());
+    this.server.use(Sentry.Handlers.requestHandler());
     this.server.use(cors());
+    this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: false }));
     this.server.use(
       '/files',
