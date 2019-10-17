@@ -4,6 +4,7 @@ import Queue from 'lib/Queue';
 import Subscription from 'app/models/Subscription';
 import Meetup from 'app/models/Meetup';
 import User from 'app/models/User';
+import File from 'app/models/File';
 
 class SubscriptionController {
   async index(req, res) {
@@ -18,6 +19,14 @@ class SubscriptionController {
             },
           },
           required: true,
+          include: [
+            User,
+            {
+              model: File,
+              as: 'file',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
         },
       ],
       order: [[Meetup, 'date']],
@@ -26,7 +35,7 @@ class SubscriptionController {
   }
 
   async store(req, res) {
-    const meetup_id = req.params.id;
+    const meetup_id = req.body.meetupId;
     const user_id = req.userId;
 
     const meetup = await Meetup.findByPk(meetup_id, { include: [User] });
@@ -80,6 +89,14 @@ class SubscriptionController {
     });
 
     return res.json(subscription);
+  }
+
+  async delete(req, res) {
+    const subscription = await Subscription.findByPk(req.params.id);
+
+    await subscription.destroy();
+
+    return res.send();
   }
 }
 

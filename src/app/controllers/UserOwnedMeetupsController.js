@@ -14,28 +14,6 @@ class UserOwnedMeetupsController {
     return res.json(meetups);
   }
 
-  async detail(req, res) {
-    const meetup = await Meetup.findByPk(req.params.id, {
-      include: [
-        {
-          model: File,
-          as: 'file',
-          attributes: ['id', 'path', 'url'],
-        },
-      ],
-    });
-
-    if (!meetup) {
-      return res.status(400).json({ error: 'Meetup does not exist' });
-    }
-
-    if (meetup.user_id !== req.userId) {
-      return res.status(401).json({ error: 'You do not own this meetup' });
-    }
-
-    return res.json(meetup);
-  }
-
   async update(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string(),

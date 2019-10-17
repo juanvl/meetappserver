@@ -21,16 +21,16 @@ routes.put('/users', UserController.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
-routes.get('/meetups/owned', UserOwnedMeetupsController.index);
-routes.get('/meetups/owned/:id', UserOwnedMeetupsController.detail);
-routes.put('/meetups/:id', UserOwnedMeetupsController.update);
-routes.delete('/meetups/:id', UserOwnedMeetupsController.delete);
-
 routes.get('/meetups', MeetupController.index);
-routes.get('/meetups/:id', MeetupController.detail);
 routes.post('/meetups', MeetupController.store);
+routes.get('/meetups/:id', MeetupController.detail);
+
+routes.get('/uomeetups', UserOwnedMeetupsController.index);
+routes.put('/uomeetups/:id', UserOwnedMeetupsController.update);
+routes.delete('/uomeetups/:id', UserOwnedMeetupsController.delete);
 
 routes.get('/subscriptions', SubscriptionController.index);
-routes.post('/meetups/:id/subscriptions', SubscriptionController.store);
+routes.post('/subscriptions', SubscriptionController.store);
+routes.delete('/subscriptions/:id', SubscriptionController.delete);
 
 export default routes;
