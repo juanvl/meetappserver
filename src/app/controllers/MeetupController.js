@@ -28,7 +28,7 @@ class MeetupController {
           attributes: ['id', 'path', 'url'],
         },
       ],
-      order: ['date'],
+      order: ['date', 'created_at'],
       limit: 10,
       offset: 10 * page - 10,
     });
